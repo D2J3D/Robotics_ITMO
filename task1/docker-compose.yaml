@@ -1,0 +1,12 @@
+name: itmo_robotics_task1
+services:
+  ros-noetic:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    working_dir: /workdir
+    volumes:
+      - ./:/workdir/
+    env_file:
+      - ./.env
+    tty: true
