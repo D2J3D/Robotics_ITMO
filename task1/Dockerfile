@@ -6,7 +6,7 @@ ARG GID
 # Create user and set environment
 RUN groupadd -g ${GID} itmogroup && \
     useradd -m -u ${UID} -g itmogroup itmo && \
-    mkdir -p /home/itmo/catkin_ws && \
+    mkdir -p /home/itmo/labs && \
     chmod -R 777 /home/itmo/
 
 # Install dependencies
@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     tmux \
     tree \
+    liburdfdom-tools \
     && rm -rf /var/lib/apt/lists/*
 
 # ROS Environment Setup
@@ -28,4 +29,4 @@ RUN echo "source /opt/ros/noetic/setup.bash" >> /home/itmo/.bashrc && \
 
 # change user
 USER itmo
-WORKDIR /home/itmo/catkin_ws
+WORKDIR /home/itmo/labs

@@ -3,12 +3,11 @@ services:
     user: itmo
     container_name: ros_itmo
     build:
-      context: ../
+      context: .
       args:
-        - UID=${UID}
-        - GID=${GID}
-      dockerfile: ./docker/Dockerfile
-    working_dir: /home/itmo/
+        - UID=${DOCKER_UID}
+        - GID=${DOCKER_GID}
+      dockerfile: ./Dockerfile
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
@@ -20,8 +19,7 @@ services:
       - ${XAUTH}:${XAUTH}:rw
       - /dev/dri:/dev/dri
       - /dev/input:/dev/input 
-      - ../:/home/itmo/catkin_ws/src
-      
+      - ../:/home/itmo/labs
     env_file:
       - ./.env
     runtime: nvidia
