@@ -1,10 +1,8 @@
 #!/bin/bash
 
-# Allow root to connect to X server
-xhost local:root
-
-# Set XAUTH path (optional, if not already set)
-export XAUTH=/tmp/.docker.xauth
+xhost local:docker
+touch ${XAUTH}
+chmod 777 ${XAUTH}
 
 # Start the container
 docker compose up --build -d 

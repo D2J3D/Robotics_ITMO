@@ -1,19 +1,29 @@
 services:
   ros:
+    user: itmo
     container_name: ros_itmo
     build:
       context: ../
+      args:
+        - UID=${UID}
+        - GID=${GID}
       dockerfile: ./docker/Dockerfile
-    working_dir: /workdir
+    working_dir: /home/itmo/
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
       - XAUTHORITY=${XAUTH}
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - ${XAUTH}:${XAUTH}
-      - ../:/workdir/
+      - ${XAUTH}:${XAUTH}:rw
+      - /dev/dri:/dev/dri
+      - /dev/input:/dev/input 
+      - ../:/home/itmo/catkin_ws/src
+      
     env_file:
       - ./.env
-    privileged: true 
+    runtime: nvidia
+    privileged: false 
     tty: true
