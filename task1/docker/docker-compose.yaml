@@ -1,0 +1,19 @@
+services:
+  ros:
+    container_name: ros_itmo
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    working_dir: /workdir
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=${XAUTH}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTH}:${XAUTH}
+      - ../:/workdir/
+    env_file:
+      - ./.env
+    privileged: true 
+    tty: true
